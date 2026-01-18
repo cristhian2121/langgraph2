@@ -3,7 +3,8 @@
   "graphs": {
     "agent": "./src/agents/main.py:agent",
     "rag": "./src/agents/rag.py:graph",
-    "support": "./src/agents/support/agent.py:agent"
+    "support": "./src/agents/support/agent.py:graph",
+    "weather": "./src/agents/support/nodes/weather/node.py:weather_agent"
   },
   "env": ".env"
 }
