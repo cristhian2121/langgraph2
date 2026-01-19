@@ -8,6 +8,6 @@ agent = create_agent(
     model="openai:gpt-4o-mini",
     tools=[get_weather],
     system_prompt="You are a helpful assistant",
-    name="Simple RAG Agent",
+    name="SimpleRAGAgent",
 )
 

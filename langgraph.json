@@ -4,7 +4,9 @@
     "agent": "./src/agents/main.py:agent",
     "rag": "./src/agents/rag.py:graph",
     "support": "./src/agents/support/agent.py:graph",
-    "weather": "./src/agents/support/nodes/weather/node.py:weather_agent"
+    "weather": "./src/agents/support/nodes/weather/node.py:weather_agent",
+    "react": "./src/agents/react.py:react_agent",
+    "booking": "./src/agents/support/nodes/booking/node.py:booking_node"
   },
   "env": ".env"
 }
