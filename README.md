@@ -2,4 +2,4 @@
 `uv pip install -e . `
 
 **Run project**
-`uv run langgraph dev `
+`uv run langgraph dev`

@@ -9,12 +9,10 @@ llm = llm.bind_tools(tools)
 def conversation(state: State):
     new_state = State()
     history = state.get("messages")
-    last_message = history[-1]
     customer_name = state.get("customer_name", "user")
     messages = [
         ("system", SYSTEM_PROMPT),
-        ("user", last_message.text)
-    ]
+    ] + list(history)
     ai_message = llm.invoke(messages)
     new_state["messages"] = [ai_message]
 
