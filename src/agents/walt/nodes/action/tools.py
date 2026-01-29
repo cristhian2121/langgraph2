@@ -32,21 +32,25 @@ def request_time_off(
         
         payload = {
             "user_benefit": {"id": "b5af1ef3-3769-4bb3-b6cf-f005d7b3b7f6"},
-            "start_at": start_date,
-            "end_at": end_date,
-            "additional_data": {"returning_date": returning_date},
-            "comments": comments,
-            "days": days
+            "start_at": str(start_date),
+            "end_at": str(end_date),
+            "additional_data": {"returning_date": str(returning_date)},
+            "comments": str(comments),
+            "days": int(days)  # Ensure it's a proper integer
         }
+
+        print(f"[DEBUG] PAYLOAD: ", payload)
         
         response = requests.post(
-            f"{base_url}/v2/benefit_request/service-interruption",
+            f"{base_url}/api/v2/benefit_request/service-interruption",            
             json=payload,
             headers=headers
         )
+        print(f"[DEBUG] RESPONSE: ", response)
         response.raise_for_status()
         return f"Time-off request submitted successfully for {start_date} to {end_date} ({days} days)."
     except Exception as e:
+        print(f"[DEBUG] ERROR: ", e)
         return f"Error submitting time-off request: {str(e)}"
 
 @tool("request_certificate", description="Request a commercial relationship certificate. Requires: fees_included (boolean) and language (must be 'english' or 'spanish')")
@@ -63,13 +67,12 @@ def request_certificate(
         base_url = get_base_url()
         
         payload = {
-            "fees_included": fees_included,
-            "language": language
+            "fees_included": bool(fees_included),  # Ensure it's a proper boolean (True/False -> true/false in JSON)
+            "language": str(language)  # Ensure it's a string
         }
-        
         response = requests.post(
-            f"{base_url}/v2/document-rqeuest/contractor/commercial-relationship",
-            json=payload,
+            f"{base_url}/api/v2/document-request/contractor/commercial-relationship",
+            json=payload,  # requests will automatically convert True/False to true/false
             headers=headers
         )
         response.raise_for_status()
@@ -96,8 +99,8 @@ def request_book_benefit(
         # Prepare multipart form data
         data = {
             "user_benefit": "35a56081-0f4f-4399-8c5a-278708309370",
-            "name": name,
-            "amount": str(amount),
+            "name": str(name),
+            "amount": str(amount),  # Convert float to string for form data
             "subject": "Hardskill"
         }
         
@@ -105,7 +108,7 @@ def request_book_benefit(
         with open(file_path, 'rb') as f:
             files = {'file': f}
             response = requests.post(
-                f"{base_url}/v2/wellness-request/brain-power-request/contractor",
+                f"{base_url}/api/v2/wellness-request/brain-power-request/contractor",
                 data=data,
                 files=files,
                 headers=headers
@@ -140,19 +143,19 @@ def request_gym_benefit(
         # Prepare multipart form data
         data = {
             "user_benefit": "0c440b29-8b6f-489e-b830-9bf489d0b4cc",
-            "start_date": start_date,
-            "service_provider": service_provider,
-            "receipt_date": receipt_date,
-            "currency": currency,
-            "period": period,
-            "receipt_amount": str(receipt_amount)
+            "start_date": str(start_date),
+            "service_provider": str(service_provider),
+            "receipt_date": str(receipt_date),
+            "currency": str(currency),
+            "period": str(period),
+            "receipt_amount": str(receipt_amount)  # Convert float to string for form data
         }
         
         # Open and send file
         with open(file_path, 'rb') as f:
             files = {'file': f}
             response = requests.post(
-                f"{base_url}/v2/wellness-request/gym-request/contractor",
+                f"{base_url}/api/v2/wellness-request/gym-request/contractor",
                 data=data,
                 files=files,
                 headers=headers
