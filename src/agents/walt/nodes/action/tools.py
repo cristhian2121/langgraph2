@@ -148,8 +148,9 @@ def request_gym_benefit(
             "receipt_date": str(receipt_date),
             "currency": str(currency),
             "period": str(period),
-            "receipt_amount": str(receipt_amount)  # Convert float to string for form data
+            "receipt_amount": int(receipt_amount)
         }
+
         
         # Open and send file
         with open(file_path, 'rb') as f:
